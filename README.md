@@ -27,11 +27,6 @@ node index.js
 ## Workflow
 
 * Do **not** commit directly to `main`.
-* Create a new branch for your work (e.g., `feature/todo-cli`).
-* When you finish the task, open a **Pull Request (PR)** into `main`.
+* Create a new branch for your work (e.g., `<your-name>/todo-cli`).
+* When you finish the task, open a **Pull Request (PR)** into `master`.
 * The PR should include your code changes and a short description of what you implemented.
-
-
-
-Want me to also add a **sample git workflow snippet** (like the `git checkout -b` and `git push origin` commands) so students know exactly how to do the branch + PR flow?
-```
