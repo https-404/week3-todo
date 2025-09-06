@@ -1,5 +1,6 @@
 
 console.log("Welcome to Todo CLI! Type something and press enter:");
+console.log("Branch: mahid/todo-cli is active!");
 
 process.stdin.on("data", (data) => {
   const input = data.toString().trim();
