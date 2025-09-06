@@ -1,12 +1,37 @@
+console.log("Welcome to Todo CLI! Type 'help' for commands:");
 
-console.log("Welcome to Todo CLI! Type something and press enter:");
-console.log("Branch: mahid/todo-cli is active!");
+function manageInput(raw) {
+  const input = (raw || '').trim();
+  if (!input) return;
+
+  const firstSpace = input.indexOf(' ');
+  const cmd = firstSpace === -1 ? input : input.slice(0, firstSpace);
+  const arg = firstSpace === -1 ? '' : input.slice(firstSpace + 1);
+
+  switch (cmd.toLowerCase()) {
+    case 'help':
+      console.log(`Commands:
+  login <username>
+  whoami
+  logout
+  add "<text>"
+  list [all|pending|done]
+  done <id>
+  delete <id>
+  help
+  exit / quit`);
+      break;
+    case 'exit':
+    case 'quit':
+      console.log('Goodbye!');
+      process.exit(0);
+      break;
+    default:
+      console.log("Unknown command. Type 'help'.");
+  }
+}
 
 process.stdin.on("data", (data) => {
-  const input = data.toString().trim();
-  if (input === "exit") {
-    console.log("Goodbye!");
-    process.exit(0);
-  }
-  console.log("You typed:", input);
+  manageInput(data.toString());
 });
+
