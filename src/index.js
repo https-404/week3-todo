@@ -1,6 +1,6 @@
 console.log("Welcome to Todo CLI! Type 'help' for commands:");
 
-const users = {};
+const users = {}; 
 let currentUser = null;
 
 function ensureUser(username) {
@@ -56,6 +56,27 @@ function cmdList(arg) {
   if (items.length === 0) return console.log('(no todos)');
   items.forEach(t => console.log(formatTodo(t)));
 }
+function cmdDone(arg) {
+  const store = getUserStore();
+  if (!store) return console.log('Please login first');
+  const id = Number((arg||'').trim());
+  if (!Number.isInteger(id)) return console.log('Usage: done <id>');
+  const todo = store.todos.find(t => t.id === id);
+  if (!todo) return console.log(`Todo ${id} not found`);
+  if (todo.done) return console.log(`Todo ${id} already done`);
+  todo.done = true;
+  console.log(`Marked [${id}] done.`);
+}
+function cmdDelete(arg) {
+  const store = getUserStore();
+  if (!store) return console.log('Please login first');
+  const id = Number((arg||'').trim());
+  if (!Number.isInteger(id)) return console.log('Usage: delete <id>');
+  const idx = store.todos.findIndex(t => t.id === id);
+  if (idx === -1) return console.log(`Todo ${id} not found`);
+  store.todos.splice(idx,1);
+  console.log(`Deleted todo [${id}]`);
+}
 
 function manageInput(raw) {
   const input = (raw || '').trim();
@@ -83,6 +104,8 @@ function manageInput(raw) {
     case 'logout': cmdLogout(); break;
     case 'add': cmdAdd(arg); break;
     case 'list': cmdList(arg); break;
+    case 'done': cmdDone(arg); break;
+    case 'delete': cmdDelete(arg); break;
     case 'exit': case 'quit':
       console.log('Goodbye!'); process.exit(0); break;
     default:
