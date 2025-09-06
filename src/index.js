@@ -1,11 +1,93 @@
+import readline from "readline"
 
-console.log("Welcome to Todo CLI! Type something and press enter:");
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
 
-process.stdin.on("data", (data) => {
-  const input = data.toString().trim();
-  if (input === "exit") {
-    console.log("Goodbye!");
-    process.exit(0);
-  }
-  console.log("You typed:", input);
-});
+const todo = []
+const users = []
+let currentUser = null
+
+const userMenu = () => {
+    console.log("\nAdd a User")
+    console.log("Select a User")
+    console.log("Exit")
+    rl.question("Choose an option: ", (choice) => {
+        handleUserInput(parseInt(choice));
+    });
+};
+
+const handleUserInput = (choice) => {
+    if (choice === 1) {
+        rl.question("\nEnter user name:", (user) => {
+            users.push(user)
+            todo[user] = [];
+            console.log("User added", user)
+            userMenu()
+        })
+    }
+    if (choice === 2) {
+        if (users.length === 0) {
+            console.log("\nNo user added")
+            userMenu()
+        }
+        else {
+            console.log("\nSelect a User: ")
+            users.forEach((user, index) => {
+                console.log(`${index + 1}.${user}`)
+            })
+            rl.question("\nSelect a User number", (num) => {
+                const index = parseInt(num) - 1;
+                if (index >= 0 && index < users.length) {
+                    currentUser = users[index]
+                    console.log(`\nUser Selected: ${currentUser}`);
+                    taskMenu();
+                } else {
+                    console.log("\nInvalid selection.");
+                    userMenu();
+                }
+            })
+        }
+
+    }
+    if (choice === 3) {
+        console.log("Good Bye")
+        rl.close()
+    }
+}
+
+const taskMenu = () => {
+    console.log("\nAdd a Task")
+    console.log("Display Task")
+    console.log("Go Back")
+    rl.question("Choose an option: ", (option) => {
+        handleInput(parseInt(option));
+    });
+}
+
+const handleInput = (option) => {
+    if (option === 1) {
+        rl.question("\nEnter the task:", (task) => {
+            todo[currentUser].push(task)
+            console.log("Task added", task)
+            taskMenu()
+        })
+    }
+    if (option === 2) {
+        console.log(`\nTodo List for ${currentUser}:`);
+        if (todo[currentUser].length === 0) {
+            console.log("No tasks added.");
+        } else {
+            todo[currentUser].forEach((task, index) => {
+                console.log(`${index + 1}. ${task}`);
+            });
+        }
+    }
+    if (option === 3) {
+        console.log("\nGoing back to User Menu")
+        userMenu()
+    }
+}
+
+userMenu();
