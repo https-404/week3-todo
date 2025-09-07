@@ -289,11 +289,4 @@ WelcomeMessage();
 rl.prompt();
 
 
-rl.on('SIGINT', () => {
-  console.log('\nGoodbye!');
-  rl.close();
-});
 
-// Start the application
-showWelcome();
-rl.prompt();
