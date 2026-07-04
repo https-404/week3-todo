@@ -1,18 +1,21 @@
 {
   "name": "todo-cli",
   "version": "1.0.0",
-  "description": "A simple multi-user Todo CLI app built with Node.js (in-memory only, no DB).",
+  "description": "A multi-user command-line todo application",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node index.js",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
     "todo",
     "cli",
-    "javascript",
-    "nodejs"
+    "command-line",
+    "task-manager"
   ],
-  "author": "",
-  "license": "MIT"
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
